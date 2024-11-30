@@ -7,23 +7,24 @@ package:
 source:
   - url: https://pypi.org/packages/source/x/xstate/xstate-{{ version }}.tar.gz
     sha256: e17a78934a8c9ea0c823891d0194f58a59cfd273f8ced0293f45c89f214a8494
-  - fn: LICENSE-MIT-{{ version }}
-    url: https://raw.githubusercontent.com/statelyai/xstate-python/master/LICENSE
-    sha256: a29c7f875f4624c4238a278b5c8330832b869f38124205e75f0259f1f3eda3a9
     patches:
       # TODO: remove after https://github.com/statelyai/xstate-python/issues/54
       - 0000-no-docs-deps.diff
+  - fn: LICENSE-MIT-{{ version }}
+    url: https://raw.githubusercontent.com/statelyai/xstate-python/master/LICENSE
+    sha256: a29c7f875f4624c4238a278b5c8330832b869f38124205e75f0259f1f3eda3a9
 
 build:
+  number: 1
   noarch: python
   script:
-    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
   host:
     - python {{ python_min }}
     - pip
+    - setuptools
   run:
     - python >={{ python_min }}
 
